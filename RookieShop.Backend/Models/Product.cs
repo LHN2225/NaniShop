@@ -12,7 +12,7 @@ namespace RookieShop.Backend.Models
         public string name { get; set; }
         public string description { get; set; }
         public int amount { get; set; }
-        public decimal price { get; set; }
+        public float price { get; set; }
         public virtual Category category { get; set; }
 
         public List<Rating> ratings { get; set; } = new List<Rating>();

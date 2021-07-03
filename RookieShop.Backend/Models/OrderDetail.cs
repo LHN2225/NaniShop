@@ -11,7 +11,7 @@ namespace RookieShop.Backend.Models
         public virtual Order order { get; set; }
         public virtual Product Product { get; set; }
         public int amount { get; set; }
-        public decimal price { get; set; }
+        public float price { get; set; }
 
     }
 }

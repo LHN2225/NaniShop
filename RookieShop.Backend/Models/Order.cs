@@ -9,7 +9,7 @@ namespace RookieShop.Backend.Models
     {
         public string id { get; set; }
         public virtual Customer customer { get; set; }
-        public decimal total { get; set; }
+        public float total { get; set; }
 
         public List<OrderDetail> orderDetails { get; set; } = new List<OrderDetail>();
 
