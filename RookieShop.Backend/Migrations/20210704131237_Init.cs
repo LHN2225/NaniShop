@@ -185,7 +185,7 @@ namespace RookieShop.Backend.Migrations
                 columns: table => new
                 {
                     id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    image = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    imageUri = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     amount = table.Column<int>(type: "int", nullable: false),
@@ -267,6 +267,41 @@ namespace RookieShop.Backend.Migrations
                         principalTable: "Products",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "id", "name" },
+                values: new object[,]
+                {
+                    { "RSCA0001", "men" },
+                    { "RSCA0002", "women" },
+                    { "RSCA0003", "baby" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Customers",
+                columns: new[] { "id", "address", "password", "phone", "username" },
+                values: new object[,]
+                {
+                    { "RSC0001", "27 IronMan street", "helloAlice", "(+84) 524-525-526", "alice" },
+                    { "RSC0002", "32 Batman street", "helloBob", "(+84) 594-595-596", "bob" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "id", "amount", "categoryid", "description", "imageUri", "name", "price" },
+                values: new object[,]
+                {
+                    { "RSCAPM0001", 100, null, "Limited edition printed shirt at New York Athletic club event 2020", "ShopImage/m1.jpg", "NY Athletic Club shirt", 2000000f },
+                    { "RSCAPM0002", 200, null, "Favorite biker jacket variant made by natural Croc skin", "ShopImage/m2.jpg", "Croc Biker Jacket", 1500000f },
+                    { "RSCAPM0003", 120, null, "Fan thanks t-shirt at Tom&Jerry anniversary show", "ShopImage/m3.jpg", "Tom&Jerry fan thanks T-shirt", 1500000f },
+                    { "RSCAPWM0001", 80, null, "Top 300 Fashion dress in 2020", "ShopImage/wm1.jpg", "Old Western style summer white dress", 2100000f },
+                    { "RSCAPWM0002", 150, null, "Suitable for jogging and casual", "ShopImage/wm2.jpg", "Karo dress", 900000f },
+                    { "RSCAPWM0003", 50, null, "Best seller product in 2020", "ShopImage/wm3.jpg", "Sub-jacket dress", 1000000f },
+                    { "RSCAPBB0001", 90, null, "Best seller baby product in June 2020", "ShopImage/bb1.jpg", "Zip-through hoodie", 400000f },
+                    { "RSCAPBB0002", 100, null, "Best seller baby product in Jan 2020", "ShopImage/bb2.jpg", "Teddy 2-piece fleece set", 380000f },
+                    { "RSCAPBB0003", 100, null, "Best seller baby product in Apr 2020", "ShopImage/bb3.jpg", "Mini Hooded jacket", 380000f }
                 });
 
             migrationBuilder.CreateIndex(
