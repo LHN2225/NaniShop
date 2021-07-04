@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RookieShop.Backend.Data;
 
-namespace RookieShop.Backend.Data.Migrations
+namespace RookieShop.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210328153823_AddBrand")]
-    partial class AddBrand
+    [Migration("20210703185019_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -156,19 +156,134 @@ namespace RookieShop.Backend.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("RookieShop.Backend.Models.Brand", b =>
+            modelBuilder.Entity("RookieShop.Backend.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.Customer", b =>
+                {
+                    b.Property<string>("id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.Order", b =>
+                {
+                    b.Property<string>("id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("customerid")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("total")
+                        .HasColumnType("real");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("customerid");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.OrderDetail", b =>
+                {
+                    b.Property<string>("id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Productid")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("orderid")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("price")
+                        .HasColumnType("real");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Productid");
+
+                    b.HasIndex("orderid");
+
+                    b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.Product", b =>
+                {
+                    b.Property<string>("id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("categoryid")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("image")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("price")
+                        .HasColumnType("real");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("categoryid");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.Rating", b =>
+                {
+                    b.Property<string>("id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Productid")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ratingPoint")
+                        .HasColumnType("int");
+
+                    b.Property<string>("username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Productid");
+
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("RookieShop.Backend.Models.User", b =>
@@ -288,6 +403,68 @@ namespace RookieShop.Backend.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.Order", b =>
+                {
+                    b.HasOne("RookieShop.Backend.Models.Customer", "customer")
+                        .WithMany("orders")
+                        .HasForeignKey("customerid");
+
+                    b.Navigation("customer");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.OrderDetail", b =>
+                {
+                    b.HasOne("RookieShop.Backend.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("Productid");
+
+                    b.HasOne("RookieShop.Backend.Models.Order", "order")
+                        .WithMany("orderDetails")
+                        .HasForeignKey("orderid");
+
+                    b.Navigation("order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.Product", b =>
+                {
+                    b.HasOne("RookieShop.Backend.Models.Category", "category")
+                        .WithMany("products")
+                        .HasForeignKey("categoryid");
+
+                    b.Navigation("category");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.Rating", b =>
+                {
+                    b.HasOne("RookieShop.Backend.Models.Product", "Product")
+                        .WithMany("ratings")
+                        .HasForeignKey("Productid");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.Category", b =>
+                {
+                    b.Navigation("products");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.Customer", b =>
+                {
+                    b.Navigation("orders");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.Order", b =>
+                {
+                    b.Navigation("orderDetails");
+                });
+
+            modelBuilder.Entity("RookieShop.Backend.Models.Product", b =>
+                {
+                    b.Navigation("ratings");
                 });
 #pragma warning restore 612, 618
         }

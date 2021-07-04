@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿/*using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RookieShop.Backend.Data;
@@ -100,3 +100,4 @@ namespace RookieShop.Backend.Controllers
         }
     }
 }
+*/
