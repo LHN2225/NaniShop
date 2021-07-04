@@ -165,6 +165,23 @@ namespace RookieShop.Backend.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            id = "RSCA0001",
+                            name = "men"
+                        },
+                        new
+                        {
+                            id = "RSCA0002",
+                            name = "women"
+                        },
+                        new
+                        {
+                            id = "RSCA0003",
+                            name = "baby"
+                        });
                 });
 
             modelBuilder.Entity("RookieShop.Backend.Models.Customer", b =>
@@ -187,6 +204,24 @@ namespace RookieShop.Backend.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            id = "RSC0001",
+                            address = "27 IronMan street",
+                            password = "helloAlice",
+                            phone = "(+84) 524-525-526",
+                            username = "alice"
+                        },
+                        new
+                        {
+                            id = "RSC0002",
+                            address = "32 Batman street",
+                            password = "helloBob",
+                            phone = "(+84) 594-595-596",
+                            username = "bob"
+                        });
                 });
 
             modelBuilder.Entity("RookieShop.Backend.Models.Order", b =>
@@ -247,8 +282,8 @@ namespace RookieShop.Backend.Migrations
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("image")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("imageUri")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
@@ -261,6 +296,89 @@ namespace RookieShop.Backend.Migrations
                     b.HasIndex("categoryid");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            id = "RSCAPM0001",
+                            amount = 100,
+                            description = "Limited edition printed shirt at New York Athletic club event 2020",
+                            imageUri = "ShopImage/m1.jpg",
+                            name = "NY Athletic Club shirt",
+                            price = 2000000f
+                        },
+                        new
+                        {
+                            id = "RSCAPM0002",
+                            amount = 200,
+                            description = "Favorite biker jacket variant made by natural Croc skin",
+                            imageUri = "ShopImage/m2.jpg",
+                            name = "Croc Biker Jacket",
+                            price = 1500000f
+                        },
+                        new
+                        {
+                            id = "RSCAPM0003",
+                            amount = 120,
+                            description = "Fan thanks t-shirt at Tom&Jerry anniversary show",
+                            imageUri = "ShopImage/m3.jpg",
+                            name = "Tom&Jerry fan thanks T-shirt",
+                            price = 1500000f
+                        },
+                        new
+                        {
+                            id = "RSCAPWM0001",
+                            amount = 80,
+                            description = "Top 300 Fashion dress in 2020",
+                            imageUri = "ShopImage/wm1.jpg",
+                            name = "Old Western style summer white dress",
+                            price = 2100000f
+                        },
+                        new
+                        {
+                            id = "RSCAPWM0002",
+                            amount = 150,
+                            description = "Suitable for jogging and casual",
+                            imageUri = "ShopImage/wm2.jpg",
+                            name = "Karo dress",
+                            price = 900000f
+                        },
+                        new
+                        {
+                            id = "RSCAPWM0003",
+                            amount = 50,
+                            description = "Best seller product in 2020",
+                            imageUri = "ShopImage/wm3.jpg",
+                            name = "Sub-jacket dress",
+                            price = 1000000f
+                        },
+                        new
+                        {
+                            id = "RSCAPBB0001",
+                            amount = 90,
+                            description = "Best seller baby product in June 2020",
+                            imageUri = "ShopImage/bb1.jpg",
+                            name = "Zip-through hoodie",
+                            price = 400000f
+                        },
+                        new
+                        {
+                            id = "RSCAPBB0002",
+                            amount = 100,
+                            description = "Best seller baby product in Jan 2020",
+                            imageUri = "ShopImage/bb2.jpg",
+                            name = "Teddy 2-piece fleece set",
+                            price = 380000f
+                        },
+                        new
+                        {
+                            id = "RSCAPBB0003",
+                            amount = 100,
+                            description = "Best seller baby product in Apr 2020",
+                            imageUri = "ShopImage/bb3.jpg",
+                            name = "Mini Hooded jacket",
+                            price = 380000f
+                        });
                 });
 
             modelBuilder.Entity("RookieShop.Backend.Models.Rating", b =>
