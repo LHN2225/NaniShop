@@ -1,6 +1,11 @@
-﻿@{
+﻿@using RookieShop.Shared
+
+@model Product
+
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
+<h2>Object: @Model.id.ToString(), @Model.name.ToString()</h2>
 
 <p>Use this page to detail your site's privacy policy.</p>
