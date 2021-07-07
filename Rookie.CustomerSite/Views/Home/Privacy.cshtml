@@ -1,6 +1,19 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
+﻿@using RookieShop.Shared
+
+@*@model List<Product>*@
+@*@model int*@
+@*@model Product*@
+@{
+	ViewData["Title"] = "Privacy Policy";
 }
+
 <h1>@ViewData["Title"]</h1>
+@*<h2>Object: @Model.id.ToString(), @Model.name.ToString()</h2>
+*@@*<h2>Status code: @Model</h2>*@
+
+@*@foreach (var item in Model)
+	{
+		<h2>Object: @item.id.ToString(), @item.name.ToString()</h2>
+	}*@
 
 <p>Use this page to detail your site's privacy policy.</p>

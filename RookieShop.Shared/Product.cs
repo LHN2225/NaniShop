@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace RookieShop.Backend.Models
+namespace RookieShop.Shared
 {
     public class Product
     {
@@ -15,7 +11,6 @@ namespace RookieShop.Backend.Models
         public int amount { get; set; }
         public float price { get; set; }
         public string categoryid { get; set; }
-
         public virtual Category category { get; set; }
 
         public List<Rating> ratings { get; set; } = new List<Rating>();
