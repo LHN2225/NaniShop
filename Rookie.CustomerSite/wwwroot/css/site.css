@@ -67,5 +67,53 @@ body {
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+  line-height: 4rem; /* Vertically center the text there */
+}
+
+#slideBanner {
+    position: relative;
+}
+.display-4 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: #7B68EE;
+    text-align: center;
+}
+#mainContent {
+    padding-bottom: 4.5rem;
+}
+
+#menBanner {
+    position: relative;
+}
+
+#menBannerText {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    text-align: center;
+}
+
+#womenBanner {
+    position: relative;
+}
+
+#womenBannerText {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    text-align: center;
+}
+
+#babyBanner {
+    position: relative;
+}
+
+#babyBannerText {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    text-align: center;
 }

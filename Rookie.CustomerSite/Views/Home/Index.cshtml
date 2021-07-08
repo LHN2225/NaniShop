@@ -1,8 +1,61 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+	ViewData["Title"] = "Home Page";
 }
+<!--<div class="text-center">
+	<h1 class="display-4">Welcome Customer </h1>-->
+@*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+<!--</div>-->
+<!--Banner-->
+<nav id="slideBanner">
+	<div id="ce01" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="~/BannerImage/slide_01.jpg" class="d-block w-100" alt="slide_01">
+			</div>
+			<div class="carousel-item">
+				<img src="~/BannerImage/slide_02.jpg" class="d-block w-100" alt="slide_01">
+			</div>
+			<div class="carousel-item">
+				<img src="~/BannerImage/slide_03.jpg" class="d-block w-100" alt="slide_01">
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
+	<h1 class="display-4">Welcome you, Fashionista!</h1>
+</nav>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome at Customer Side</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+<!--Side and contnet-->
+<h1 class="text-center p-5">
+	<b style="color:Tomato;">Product</b>
+	<b>Lines</b>
+</h1>
+<nav id="menBanner">
+	<a class="nav-link pl-0 pr-0 w-100" asp-area="" asp-controller="Home" asp-action="Privacy">
+		<img src="~/BannerImage/banner_men_01.jpg" class="d-block w-100" alt="men_01">
+	</a>
+	<h3 id="menBannerText">Men's</h3>
+</nav>
+
+<nav id="womenBanner">
+	<a class="nav-link pl-0 pr-0 w-100" asp-area="" asp-controller="Home" asp-action="Privacy">
+		<img src="~/BannerImage/banner_women_01.jpg" class="d-block w-100" alt="women_01">
+	</a>
+	<h3 id="womenBannerText">Women's</h3>
+</nav>
+
+<nav id="babyBanner">
+	<a class="nav-link pl-0 pr-0 w-100" asp-area="" asp-controller="Home" asp-action="Privacy">
+		<img src="~/BannerImage/banner_baby_01.jpg" class="d-block w-100" alt="baby_01">
+	</a>
+	<h3 id="babyBannerText">Kid's</h3>
+</nav>
+

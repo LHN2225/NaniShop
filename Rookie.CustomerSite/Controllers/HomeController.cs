@@ -30,8 +30,8 @@ namespace Rookie.CustomerSite.Controllers
         public IActionResult PrivacyAsync()
         {
             //List<Product> productList = GetAllProductAsync("api/Products").GetAwaiter().GetResult();
-            MyCallingAPI<Product> myCallingAPI = new MyCallingAPI<Product>();
-            Product product = myCallingAPI.GetResFrom("api/Products/RSCAPWM0002");
+            //MyCallingAPI<Product> myCallingAPI = new MyCallingAPI<Product>();
+            //Product product = myCallingAPI.GetResFrom("api/Products/RSCAPWM0002");
 
             //if (product == null) return View(null);
             //return View(product);
