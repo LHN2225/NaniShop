@@ -42,6 +42,14 @@ namespace RookieShop.Backend.Controllers
             return category;
         }
 
+        // GET: api/Categories/Details/5
+        [HttpGet("Details/{id}")]
+        public List<Product> GetProductByCategoryId(string id)
+		{
+            var productList = _context.Products.Where(p => p.categoryid == id).ToList();
+            return productList;
+		}
+
         // PUT: api/Categories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

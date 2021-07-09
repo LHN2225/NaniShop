@@ -1,0 +1,30 @@
+﻿@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using RookieShop.Shared;
+@using Rookie.CustomerSite.ViewModels;
+
+@model ViewCategoryProduct
+@*@model string*@
+
+@{
+	ViewData["Title"] = "Category detail Page";
+}
+
+<div>
+	@if (Model != null)
+	{
+		<h2>Category: @Model.category.name</h2>
+		@foreach (var item in Model.productList)
+		{
+			<h2>Product: @item.id.ToString(), @item.name.ToString()</h2>
+		}
+	}
+	else
+	{
+		<h1>No product found!</h1>
+	}
+
+	@*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+</div>
