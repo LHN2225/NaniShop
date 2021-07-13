@@ -39,33 +39,31 @@ namespace Rookie.CustomerSite.Controllers
 		[HttpGet("{id}")]
 		public ActionResult Details(string id)
 		{
-			viewCategoryProduct.category = GetCategory($"api/Categories/{id}").GetAwaiter().GetResult();
+			viewCategoryProduct.category = GetTarget<Category>($"api/Categories/{id}").GetAwaiter().GetResult();
 			if (viewCategoryProduct.category == null) return View(null);
 
-			viewCategoryProduct.productList = GetProductbyCategory($"api/Categories/Details/{id}").GetAwaiter().GetResult();
+			viewCategoryProduct.productList = GetListTarget<Product>($"api/Categories/Details/{id}").GetAwaiter().GetResult();
 			return View(viewCategoryProduct);
-
-			return View();
 		}
-		static async Task<Category> GetCategory(string path)
+		static async Task<T> GetTarget<T>(string path) where T : class
 		{
-			Category category = null;
+			T target = null;
 			HttpResponseMessage response = await client.GetAsync(path);
 			if (response.IsSuccessStatusCode)
 			{
-				category = await response.Content.ReadAsAsync<Category>();
+				target = await response.Content.ReadAsAsync<T>();
 			}
-			return category;
+			return target;
 		}
-		static async Task<List<Product>> GetProductbyCategory(string path)
+		static async Task<List<T>> GetListTarget<T>(string path) where T : class
 		{
-			List<Product> products = null;
+			List<T> target = null;
 			HttpResponseMessage response = await client.GetAsync(path);
 			if (response.IsSuccessStatusCode)
 			{
-				products = await response.Content.ReadAsAsync<List<Product>>();
+				target = await response.Content.ReadAsAsync<List<T>>();
 			}
-			return products;
+			return target;
 		}
 
 		// GET: CategoryController/Create

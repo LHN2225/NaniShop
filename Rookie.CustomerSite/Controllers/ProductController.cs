@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Rookie.CustomerSite.ViewModels;
 using RookieShop.Shared;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Rookie.CustomerSite.Controllers
 	public class ProductController : Controller
 	{
 		static HttpClient client = new HttpClient();
-
+		static ViewProductDetail viewProductDetail = new ViewProductDetail();
 		static ProductController()
 		{
 			client.BaseAddress = new Uri("https://localhost:44341/");
@@ -23,15 +24,15 @@ namespace Rookie.CustomerSite.Controllers
 				new MediaTypeWithQualityHeaderValue("application/json"));
 		}
 
-		static async Task<Product> GetProductDetail(string path)
+		static async Task<T> GetTarget<T>(string path) where T : class
 		{
-			Product product = null;
+			T target = null;
 			HttpResponseMessage response = await client.GetAsync(path);
 			if (response.IsSuccessStatusCode)
 			{
-				product = await response.Content.ReadAsAsync<Product>();
+				target = await response.Content.ReadAsAsync<T>();
 			}
-			return product;
+			return target;
 		}
 
 
@@ -45,8 +46,9 @@ namespace Rookie.CustomerSite.Controllers
 		[HttpGet("{id}")]
 		public ActionResult Details(string id)
 		{
-			Product product = GetProductDetail($"api/Products/{id}").GetAwaiter().GetResult();
-			return View(product);
+			viewProductDetail.product = GetTarget<Product>($"api/Products/Details/{id}").GetAwaiter().GetResult();
+			viewProductDetail.category = GetTarget<Category>($"api/Categories/{viewProductDetail.product.categoryid}").GetAwaiter().GetResult();
+			return View(viewProductDetail);
 		}
 
 		// GET: ProductController/Create

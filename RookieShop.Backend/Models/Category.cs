@@ -10,7 +10,7 @@ namespace RookieShop.Backend.Models
         public string id { get; set; }
         public string name { get; set; }
 
-        public List<Product> products { get; set; } = new List<Product>();
+        public virtual List<Product> products { get; set; } = new List<Product>();
 
     }
 }

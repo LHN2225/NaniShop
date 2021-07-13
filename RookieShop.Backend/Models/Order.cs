@@ -11,7 +11,7 @@ namespace RookieShop.Backend.Models
         public virtual Customer customer { get; set; }
         public float total { get; set; }
 
-        public List<OrderDetail> orderDetails { get; set; } = new List<OrderDetail>();
+        public virtual List<OrderDetail> orderDetails { get; set; } = new List<OrderDetail>();
 
     }
 }

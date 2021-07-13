@@ -32,7 +32,7 @@ namespace RookieShop.Backend
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("connection")));
+                    Configuration.GetConnectionString("connection"))/*.UseLazyLoadingProxies()*/);
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)

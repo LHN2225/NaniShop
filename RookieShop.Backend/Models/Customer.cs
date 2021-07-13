@@ -13,6 +13,6 @@ namespace RookieShop.Backend.Models
         public string phone { get; set; }
         public string address { get; set; }
 
-        public List<Order> orders { get; set; } = new List<Order>();
+        public virtual List<Order> orders { get; set; } = new List<Order>();
     }
 }

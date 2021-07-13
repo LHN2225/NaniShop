@@ -18,6 +18,6 @@ namespace RookieShop.Backend.Models
 
         public virtual Category category { get; set; }
 
-        public List<Rating> ratings { get; set; } = new List<Rating>();
+        public virtual List<Rating> ratings { get; set; } = new List<Rating>();
     }
 }
