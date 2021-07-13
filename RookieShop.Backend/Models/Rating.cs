@@ -10,6 +10,8 @@ namespace RookieShop.Backend.Models
         public string id { get; set; }
         public string username { get; set; }
         public int ratingPoint { get; set; }
+        public string Productid { get; set; }
+        public DateTime localDate { get; set; }
 
         public virtual Product Product { get; set; }
 

@@ -42,22 +42,22 @@ namespace RookieShop.Backend.Data
 
             builder.Entity<Category>().HasData(new List<Category>()
             {
-                new Category() {id = "RSCA0001", name="men"},
-                new Category() {id = "RSCA0002", name="women"},
-                new Category() {id = "RSCA0003", name="baby"}
+                new Category() {id = "RSCA0001", name="Men"},
+                new Category() {id = "RSCA0002", name="Women"},
+                new Category() {id = "RSCA0003", name="Baby"}
             });
 
             builder.Entity<Product>().HasData(new List<Product>()
             {
-                new Product() {id = "RSCAPM0001", name="NY Athletic Club shirt", description="Limited edition printed shirt at New York Athletic club event 2020", amount=100, price=2000000, imageUri="ShopImage/m1.jpg"},
-                new Product() {id = "RSCAPM0002", name="Croc Biker Jacket", description="Favorite biker jacket variant made by natural Croc skin", amount=200, price=1500000 , imageUri="ShopImage/m2.jpg"},
-                new Product() {id = "RSCAPM0003", name="Tom&Jerry fan thanks T-shirt", description="Fan thanks t-shirt at Tom&Jerry anniversary show", amount=120, price=1500000, imageUri="ShopImage/m3.jpg"},
-                new Product() {id = "RSCAPWM0001", name="Old Western style summer white dress", description="Top 300 Fashion dress in 2020", amount=80, price=2100000, imageUri="ShopImage/wm1.jpg"},
-                new Product() {id = "RSCAPWM0002", name="Karo dress", description="Suitable for jogging and casual", amount=150, price=900000, imageUri="ShopImage/wm2.jpg"},
-                new Product() {id = "RSCAPWM0003", name="Sub-jacket dress", description="Best seller product in 2020", amount=50, price=1000000, imageUri="ShopImage/wm3.jpg"},
-                new Product() {id = "RSCAPBB0001", name="Zip-through hoodie", description="Best seller baby product in June 2020", amount=90, price=400000, imageUri="ShopImage/bb1.jpg"},
-                new Product() {id = "RSCAPBB0002", name="Teddy 2-piece fleece set", description="Best seller baby product in Jan 2020", amount=100, price=380000, imageUri="ShopImage/bb2.jpg"},
-                new Product() {id = "RSCAPBB0003", name="Mini Hooded jacket", description="Best seller baby product in Apr 2020", amount=100, price=380000, imageUri="ShopImage/bb3.jpg"},
+                new Product() {id = "RSCAPM0001", name="NY Athletic Club shirt", description="Limited edition printed shirt at New York Athletic club event 2020", amount=100, price=2000000, imageUri="ProductImage/m1.jpg"},
+                new Product() {id = "RSCAPM0002", name="Croc Biker Jacket", description="Favorite biker jacket variant made by natural Croc skin", amount=200, price=1500000 , imageUri="ProductImage/m2.jpg"},
+                new Product() {id = "RSCAPM0003", name="Tom&Jerry fan thanks T-shirt", description="Fan thanks t-shirt at Tom&Jerry anniversary show", amount=120, price=1500000, imageUri="ProductImage/m3.jpg"},
+                new Product() {id = "RSCAPWM0001", name="Old Western style summer white dress", description="Top 300 Fashion dress in 2020", amount=80, price=2100000, imageUri="ProductImage/wm1.jpg"},
+                new Product() {id = "RSCAPWM0002", name="Karo dress", description="Suitable for jogging and casual", amount=150, price=900000, imageUri="ProductImage/wm2.jpg"},
+                new Product() {id = "RSCAPWM0003", name="Sub-jacket dress", description="Best seller product in 2020", amount=50, price=1000000, imageUri="ProductImage/wm3.jpg"},
+                new Product() {id = "RSCAPBB0001", name="Zip-through hoodie", description="Best seller baby product in June 2020", amount=90, price=400000, imageUri="ProductImage/bb1.jpg"},
+                new Product() {id = "RSCAPBB0002", name="Teddy 2-piece fleece set", description="Best seller baby product in Jan 2020", amount=100, price=380000, imageUri="ProductImage/bb2.jpg"},
+                new Product() {id = "RSCAPBB0003", name="Mini Hooded jacket", description="Best seller baby product in Apr 2020", amount=100, price=380000, imageUri="ProductImage/bb3.jpg"},
             });
         }
     }
