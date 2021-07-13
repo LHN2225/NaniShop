@@ -1,0 +1,83 @@
+﻿@using RookieShop.Shared;
+@inject Microsoft.Extensions.Configuration.IConfiguration configuration;
+
+
+@{
+	ViewData["Title"] = "Product detail Page";
+}
+
+@model Product
+
+<div class="container">
+	<div class="row">
+		<ol>
+			<a id="order_path_home" href="#">
+				Home
+			</a>
+			>
+			<a id="order_path_category" href="#">
+				Category
+			</a>
+			> @Model.name
+		</ol>
+		<hr />
+	</div>
+	<div class="row">
+		<div class="col-8">
+			<div id="product_detail_image_frame" class="text-center">
+				<div id="product_detail_image_btn" class="btn btn-outline-light p-0">
+					<img id="product_detail_image" src="@Url.Content(configuration["BackendBaseAddress"] + Model.imageUri)" alt="Model.imageUri">
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			<div id="product_property" class="mt-5">
+				<h2 id="product_detail_name">@Model.name</h2>
+				<h4>@Model.price VNĐ</h4>
+
+				@if (Model.amount > 0)
+				{
+					<h6 style="color: green">In stock: @Model.amount</h6>
+				}
+				else
+				{
+					<h6 style="color: tomato">Out of stock</h6>
+				}
+				@*<label for="quantity_purchase">Quantity you would like to purchase:</label>*@
+				<div>
+					<select class="form-control mt-4 mb-2 w-auto" id="quantity_purchase">
+						@if (Model.amount < 20)
+						{
+							@for (int i = 1; i <= Model.amount; ++i)
+							{
+								<option>@i</option>
+							}
+						}
+						else
+						{
+							@for (int i = 1; i <= 20; ++i)
+							{
+								<option>@i</option>
+							}
+						}
+					</select>
+				</div>
+
+				<p>*Note: We restrict the purchase limit available to a single household to ensure fairness for all of our fans.</p>
+			</div>
+
+			<a id="addtocard_product_detail_btn" href="#" class="btn btn-outline-light w-100">
+				<p id="addtocard_product_detail_text">Add to Cart</p>
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<h2>Description</h2>
+		<hr />
+		<p>@Model.description</p>
+	</div>
+	<div class="row">
+		<h3>Rating</h3>
+		<hr />
+	</div>
+</div>

@@ -4,6 +4,7 @@
 
 @using RookieShop.Shared;
 @using Rookie.CustomerSite.ViewModels;
+@inject Microsoft.Extensions.Configuration.IConfiguration configuration;
 
 @model ViewCategoryProduct
 @*@model string*@
@@ -19,6 +20,12 @@
 			{
 				<h2>Category: @Model.category.name</h2>
 			}
+			<form class="form-check">
+				<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+				<label class="form-check-label" for="flexCheckDefault">
+					Featured product
+				</label>
+			</form>
 		</div>
 		<div class="col">
 			<div class="container">
@@ -27,13 +34,19 @@
 					{
 						@foreach (var item in Model.productList)
 						{
-							<div class="card col-4" @*style="width: 20rem;"*@>
-								<img src="@Url.Content(@item.imageUri)" class="card-img-top" alt="@item.imageUri">
+							<div id="product_card" class="card col-md-4 col-sm-6 col-xs-12 p-0" @*style="width: 20rem;"*@>
+								<a id="product_card_image_btn" class="btn btn-outline-light p-0" asp-controller="Product" asp-action="@item.id">
+									<img id="product_card_image" src="@Url.Content(configuration["BackendBaseAddress"] + @item.imageUri)" alt="@item.imageUri">
+								</a>
 								<div class="card-body">
-									<h5 class="card-title">@item.name</h5>
-									<h6>@item.price VND</h6>
+									<a id="product_card_name_link" asp-controller="Product" asp-action="@item.id">
+										<h5 id="product_card_name" class="card-title">@item.name</h5>
+									</a>
+									<h6 class="align-bottom">@item.price VND</h6>
 
-									<a href="#" class="btn btn-primary">Add to card</a>
+									<a id="addtocard_btn" href="#" class="btn btn-outline-light w-100">
+										<p id="addtocard_text">Add to Cart</p>
+									</a>
 								</div>
 							</div>
 						}
@@ -43,7 +56,7 @@
 						<h1>No product found!</h1>
 					}
 				</div>
-			</div>				
-		</div>	
+			</div>
+		</div>
 	</div>
 </div>
