@@ -5,14 +5,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\ProductImage\bb1.jpg" />
+    <Content Remove="wwwroot\ProductImage\bb2.jpg" />
+    <Content Remove="wwwroot\ProductImage\bb3.jpg" />
+    <Content Remove="wwwroot\ProductImage\m1.jpg" />
+    <Content Remove="wwwroot\ProductImage\m2.jpg" />
+    <Content Remove="wwwroot\ProductImage\m3.jpg" />
+    <Content Remove="wwwroot\ProductImage\wm1.jpg" />
+    <Content Remove="wwwroot\ProductImage\wm2.jpg" />
+    <Content Remove="wwwroot\ProductImage\wm3.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\BannerImage\slide_01.jpg" />
     <None Include="wwwroot\BannerImage\slide_02.jpg" />
     <None Include="wwwroot\BannerImage\slide_03.jpg" />
+    <None Include="wwwroot\ProductImage\bb1.jpg" />
+    <None Include="wwwroot\ProductImage\bb2.jpg" />
+    <None Include="wwwroot\ProductImage\bb3.jpg" />
+    <None Include="wwwroot\ProductImage\m1.jpg" />
+    <None Include="wwwroot\ProductImage\m2.jpg" />
+    <None Include="wwwroot\ProductImage\m3.jpg" />
+    <None Include="wwwroot\ProductImage\wm1.jpg" />
+    <None Include="wwwroot\ProductImage\wm2.jpg" />
+    <None Include="wwwroot\ProductImage\wm3.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>

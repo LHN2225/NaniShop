@@ -117,3 +117,119 @@ body {
     left: 10%;
     text-align: center;
 }
+
+#product_card_image {
+    height: auto;
+    width: 100%;
+}
+
+#product_card_name {
+    height: 4rem;
+}
+
+#addtocard_btn {
+    position: relative;
+    background-color: coral;
+    color: black;
+    border-color: coral;
+    height: 3rem;
+    text-align: match-parent;
+}
+    #addtocard_btn:hover {
+        background-color: white;
+    }
+
+#addtocard_text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+#product_card_name_link {
+    text-decoration: none;
+    color: black;
+}
+    #product_card_name_link:hover {
+        text-decoration: underline;
+    }
+
+#product_card {
+    width: 18rem;
+}
+
+#product_card_image_btn {
+    /*position: relative;*/
+    height: 26rem;
+}
+
+#product_card_image {
+    /*position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);*/
+    padding: 1rem;
+    width: 90%;
+    height: auto;
+}
+    #product_card_image:hover {
+        padding: 0;
+        width: 100%;
+        height: auto;
+    }
+
+#product_detail_image_frame {
+    position: relative;
+    width: 100%;
+}
+
+#product_detail_image_btn {
+    height: 40rem;
+    width: 100%;
+}
+
+#product_detail_image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    height: 80%;
+    width: auto;
+}
+    #product_detail_image:hover {
+        height: 100%;
+        width: auto;
+    }
+
+
+#order_path_home {
+    text-decoration: none;
+}
+
+#order_path_category {
+    text-decoration: none;
+}
+
+#product_detail_name {
+    height: 6rem;
+}
+
+#addtocard_product_detail_btn {
+    position: relative;
+    background-color: coral;
+    color: black;
+    border-color: coral;
+    height: 3rem;
+    text-align: match-parent;
+}
+
+    #addtocard_product_detail_btn:hover {
+        background-color: white;
+    }
+
+#addtocard_product_detail_text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}

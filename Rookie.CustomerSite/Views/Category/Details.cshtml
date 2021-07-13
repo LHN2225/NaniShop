@@ -4,6 +4,7 @@
 
 @using RookieShop.Shared;
 @using Rookie.CustomerSite.ViewModels;
+@inject Microsoft.Extensions.Configuration.IConfiguration configuration;
 
 @model ViewCategoryProduct
 @*@model string*@
@@ -12,19 +13,50 @@
 	ViewData["Title"] = "Category detail Page";
 }
 
-<div>
-	@if (Model != null)
-	{
-		<h2>Category: @Model.category.name</h2>
-		@foreach (var item in Model.productList)
-		{
-			<h2>Product: @item.id.ToString(), @item.name.ToString()</h2>
-		}
-	}
-	else
-	{
-		<h1>No product found!</h1>
-	}
+<div class="container">
+	<div class="row">
+		<div class="col-3">
+			@if (Model != null)
+			{
+				<h2>Category: @Model.category.name</h2>
+			}
+			<form class="form-check">
+				<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+				<label class="form-check-label" for="flexCheckDefault">
+					Featured product
+				</label>
+			</form>
+		</div>
+		<div class="col">
+			<div class="container">
+				<div class="row">
+					@if (Model != null)
+					{
+						@foreach (var item in Model.productList)
+						{
+							<div id="product_card" class="card col-md-4 col-sm-6 col-xs-12 p-0" @*style="width: 20rem;"*@>
+								<a id="product_card_image_btn" class="btn btn-outline-light p-0" asp-controller="Product" asp-action="@item.id">
+									<img id="product_card_image" src="@Url.Content(configuration["BackendBaseAddress"] + @item.imageUri)" alt="@item.imageUri">
+								</a>
+								<div class="card-body">
+									<a id="product_card_name_link" asp-controller="Product" asp-action="@item.id">
+										<h5 id="product_card_name" class="card-title">@item.name</h5>
+									</a>
+									<h6 class="align-bottom">@item.price VND</h6>
 
-	@*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+									<a id="addtocard_btn" href="#" class="btn btn-outline-light w-100">
+										<p id="addtocard_text">Add to Cart</p>
+									</a>
+								</div>
+							</div>
+						}
+					}
+					else
+					{
+						<h1>No product found!</h1>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
