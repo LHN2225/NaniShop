@@ -11,7 +11,7 @@ namespace RookieShop.Shared
         public int amount { get; set; }
         public float price { get; set; }
         public string categoryid { get; set; }
-        public virtual Category category { get; set; }
+        //public virtual Category category { get; set; }
 
         public List<Rating> ratings { get; set; } = new List<Rating>();
     }

@@ -1,4 +1,5 @@
 ﻿@using RookieShop.Shared;
+@using Rookie.CustomerSite.ViewModels;
 @inject Microsoft.Extensions.Configuration.IConfiguration configuration;
 
 
@@ -6,62 +7,63 @@
 	ViewData["Title"] = "Product detail Page";
 }
 
-@model Product
+@model ViewProductDetail
 
 <div class="container">
 	<div class="row">
-		<ol>
-			<a id="order_path_home" href="#">
+		<div style="display: inline-block">
+			<a id="order_path_home" asp-controller="Home" asp-action="Index">
 				Home
 			</a>
 			>
-			<a id="order_path_category" href="#">
-				Category
+			<a id="order_path_category" asp-controller="Category" asp-action="@Model.category.id">
+				@Model.category.name
 			</a>
-			> @Model.name
-		</ol>
+			> @Model.product.name
+		</div>
 		<hr />
 	</div>
 	<div class="row">
 		<div class="col-8">
 			<div id="product_detail_image_frame" class="text-center">
 				<div id="product_detail_image_btn" class="btn btn-outline-light p-0">
-					<img id="product_detail_image" src="@Url.Content(configuration["BackendBaseAddress"] + Model.imageUri)" alt="Model.imageUri">
+					<img id="product_detail_image" src="@Url.Content(configuration["BackendBaseAddress"] + Model.product.imageUri)" alt="Model.imageUri">
 				</div>
 			</div>
 		</div>
 		<div class="col">
 			<div id="product_property" class="mt-5">
-				<h2 id="product_detail_name">@Model.name</h2>
-				<h4>@Model.price VNĐ</h4>
+				<h2 id="product_detail_name">@Model.product.name</h2>
+				<h4>@Model.product.price VNĐ</h4>
 
-				@if (Model.amount > 0)
+				@if (Model.product.amount > 0)
 				{
-					<h6 style="color: green">In stock: @Model.amount</h6>
+					<h6 style="color: green">In stock: @Model.product.amount</h6>
+					<div>
+						<select class="form-control mt-4 mb-2 w-auto" id="quantity_purchase">
+							@if (Model.product.amount < 10)
+							{
+								@for (int i = 1; i <= Model.product.amount; ++i)
+								{
+									<option>@i</option>
+								}
+							}
+							else
+							{
+								@for (int i = 1; i <= 10; ++i)
+								{
+									<option>@i</option>
+								}
+							}
+						</select>
+					</div>
 				}
 				else
 				{
 					<h6 style="color: tomato">Out of stock</h6>
 				}
 				@*<label for="quantity_purchase">Quantity you would like to purchase:</label>*@
-				<div>
-					<select class="form-control mt-4 mb-2 w-auto" id="quantity_purchase">
-						@if (Model.amount < 20)
-						{
-							@for (int i = 1; i <= Model.amount; ++i)
-							{
-								<option>@i</option>
-							}
-						}
-						else
-						{
-							@for (int i = 1; i <= 20; ++i)
-							{
-								<option>@i</option>
-							}
-						}
-					</select>
-				</div>
+
 
 				<p>*Note: We restrict the purchase limit available to a single household to ensure fairness for all of our fans.</p>
 			</div>
@@ -74,10 +76,21 @@
 	<div class="row">
 		<h2>Description</h2>
 		<hr />
-		<p>@Model.description</p>
+		<p>@Model.product.description</p>
 	</div>
 	<div class="row">
 		<h3>Rating</h3>
 		<hr />
+	</div>
+	<div class="row">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Card title</h5>
+				@*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
+				<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				@*<a href="#" class="card-link">Card link</a>
+				<a href="#" class="card-link">Another link</a>*@
+			</div>
+		</div>
 	</div>
 </div>

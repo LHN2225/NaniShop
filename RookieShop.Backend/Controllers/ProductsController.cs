@@ -42,6 +42,14 @@ namespace RookieShop.Backend.Controllers
             return product;
         }
 
+        [HttpGet("Details/{id}")]
+        public ActionResult<Product> GetProductWithRating(string id)
+        {
+            var product = _context.Products.Single(p => p.id == id);
+
+            return product;
+        }
+
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
