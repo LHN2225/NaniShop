@@ -8,7 +8,7 @@ namespace Rookie.CustomerSite.ViewModels
 {
 	public class ViewProductDetail
 	{
-		public Category category { get; set; }
-		public Product product { get; set; }
+		public CategoryDto category { get; set; }
+		public ProductDto product { get; set; }
 	}
 }

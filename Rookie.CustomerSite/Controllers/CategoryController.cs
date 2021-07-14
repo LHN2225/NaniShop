@@ -52,7 +52,7 @@ namespace Rookie.CustomerSite.Controllers
 		[HttpGet("{id}")]
 		public ActionResult Details(string id)
 		{
-			viewCategoryProduct.category = GetTarget<Category>($"api/Categories/{id}").GetAwaiter().GetResult();
+			viewCategoryProduct.category = GetTarget<CategoryDto>($"api/Categories/{id}").GetAwaiter().GetResult();
 			if (viewCategoryProduct.category == null) return View(null);
 
 			//viewCategoryProduct.productList = GetListTarget<Product>($"api/Categories/Details/{id}").GetAwaiter().GetResult();

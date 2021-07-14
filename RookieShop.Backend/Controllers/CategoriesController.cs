@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RookieShop.Backend.Data;
 using RookieShop.Backend.Models;
+using RookieShop.Shared;
 
 namespace RookieShop.Backend.Controllers
 {
@@ -55,8 +56,14 @@ namespace RookieShop.Backend.Controllers
         // PUT: api/Categories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategory(string id, Category category)
+        public async Task<IActionResult> PutCategory(string id, CategoryDto categoryDto)
         {
+            Category category = new Category()
+            {
+                id = categoryDto.id,
+                name = categoryDto.name
+            };
+
             if (id != category.id)
             {
                 return BadRequest();
@@ -86,8 +93,14 @@ namespace RookieShop.Backend.Controllers
         // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
+        public async Task<ActionResult<Category>> PostCategory(CategoryDto categoryDto)
         {
+            Category category = new Category()
+            {
+                id = categoryDto.id,
+                name = categoryDto.name
+            };
+
             _context.Categories.Add(category);
             try
             {

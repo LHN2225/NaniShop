@@ -46,8 +46,8 @@ namespace Rookie.CustomerSite.Controllers
 		[HttpGet("{id}")]
 		public ActionResult Details(string id)
 		{
-			viewProductDetail.product = GetTarget<Product>($"api/Products/Details/{id}").GetAwaiter().GetResult();
-			viewProductDetail.category = GetTarget<Category>($"api/Categories/{viewProductDetail.product.categoryid}").GetAwaiter().GetResult();
+			viewProductDetail.product = GetTarget<ProductDto>($"api/Products/Details/{id}").GetAwaiter().GetResult();
+			viewProductDetail.category = GetTarget<CategoryDto>($"api/Categories/{viewProductDetail.product.categoryid}").GetAwaiter().GetResult();
 			return View(viewProductDetail);
 		}
 

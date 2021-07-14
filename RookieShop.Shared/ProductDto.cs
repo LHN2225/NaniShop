@@ -2,7 +2,7 @@
 
 namespace RookieShop.Shared
 {
-    public class Product
+    public class ProductDto
     {
         public string id { get; set; }
         public string imageUri { get; set; }
@@ -13,6 +13,6 @@ namespace RookieShop.Shared
         public string categoryid { get; set; }
         //public virtual Category category { get; set; }
 
-        public List<Rating> ratings { get; set; } = new List<Rating>();
+        public List<RatingDto> ratings { get; set; } = new List<RatingDto>();
     }
 }
