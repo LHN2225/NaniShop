@@ -29,40 +29,38 @@ namespace Rookie.CustomerSite.Controllers
 
         public IActionResult PrivacyAsync()
         {
-            //List<Product> productList = GetAllProductAsync("api/Products").GetAwaiter().GetResult();
-            //MyCallingAPI<Product> myCallingAPI = new MyCallingAPI<Product>();
-            //Product product = myCallingAPI.GetResFrom("api/Products/RSCAPWM0002");
+            List<ProductDto> productList = GetAllProductAsync("api/Products").GetAwaiter().GetResult();
+			//MyCallingAPI<Product> myCallingAPI = new MyCallingAPI<Product>();
+			//Product product = myCallingAPI.GetResFrom("api/Products/RSCAPWM0002");
 
-            //if (product == null) return View(null);
-            //return View(product);
+			//if (product == null) return View(null);
+			//return View(product);
 
-            //Product product = new Product() { id = "1" };
+			//Product product = new Product() { id = "1" };
 
-            //var url = CreateProductAsync(product).GetAwaiter().GetResult();
+			//var url = CreateProductAsync(product).GetAwaiter().GetResult();
 
-            //Product product = GetProductAsync("api/Products/1").GetAwaiter().GetResult();
+			//Product product = GetProductAsync("api/Products/1").GetAwaiter().GetResult();
 
-            /*if (product != null)
+			/*if (product != null)
 			{
                 product.name = "I am a dummy product name";
 			}*/
 
-            /*foreach (var item in productList)
+			foreach (var item in productList)
 			{
-                if (item.id.Contains("RSCAPM")) item.categoryid = "RSCA0001";
-                else if (item.id.Contains("RSCAPWM")) item.categoryid = "RSCA0002";
-                else if (item.id.Contains("RSCAPBB")) item.categoryid = "RSCA0003";
+				if (item.id.Contains("RSCAPM")) item.amount = 50;
 
-            }
+			}
 
-            foreach (var item in productList)
+			foreach (var item in productList)
 			{
-                UpdateProductAsync(item).GetAwaiter().GetResult(); ;
-            }*/
+				UpdateProductAsync(item).GetAwaiter().GetResult(); ;
+			}
 
-            //var statusCode = DeleteProductAsync(product.id).GetAwaiter().GetResult();
+			//var statusCode = DeleteProductAsync(product.id).GetAwaiter().GetResult();
 
-            return View();
+			return View();
             //return View(product);
         }
 
@@ -72,7 +70,7 @@ namespace Rookie.CustomerSite.Controllers
 
 		}*/
 
-		static async Task<Product> GetProductAsync(string path)
+		static async Task<ProductDto> GetProductAsync(string path)
 		{
 
 			HttpClient client = new HttpClient();
@@ -83,16 +81,16 @@ namespace Rookie.CustomerSite.Controllers
 				new MediaTypeWithQualityHeaderValue("application/json"));
 
 
-			Product product = null;
+			ProductDto product = null;
 			HttpResponseMessage response = await client.GetAsync(path);
 			if (response.IsSuccessStatusCode)
 			{
-				product = await response.Content.ReadAsAsync<Product>();
+				product = await response.Content.ReadAsAsync<ProductDto>();
 			}
 			return product;
 		}
 
-        static async Task<List<Product>> GetAllProductAsync(string path)
+        static async Task<List<ProductDto>> GetAllProductAsync(string path)
         {
 
             HttpClient client = new HttpClient();
@@ -103,15 +101,15 @@ namespace Rookie.CustomerSite.Controllers
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
 
-            List<Product> product = null;
+            List<ProductDto> product = null;
             HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
             {
-                product = await response.Content.ReadAsAsync<List<Product>>();
+                product = await response.Content.ReadAsAsync<List<ProductDto>>();
             }
             return product;
         }
-        static async Task<Uri> CreateProductAsync(Product product)
+        static async Task<Uri> CreateProductAsync(ProductDto product)
         {
             HttpClient client = new HttpClient();
 
@@ -128,7 +126,7 @@ namespace Rookie.CustomerSite.Controllers
             return response.Headers.Location;
         }
 
-        static async Task<Product> UpdateProductAsync(Product product)
+        static async Task<ProductDto> UpdateProductAsync(ProductDto product)
         {
             HttpClient client = new HttpClient();
 
@@ -142,7 +140,7 @@ namespace Rookie.CustomerSite.Controllers
             response.EnsureSuccessStatusCode();
 
             // Deserialize the updated product from the response body.
-            product = await response.Content.ReadAsAsync<Product>();
+            product = await response.Content.ReadAsAsync<ProductDto>();
             return product;
         }
 

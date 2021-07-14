@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace RookieShop.Backend.Models
+namespace RookieShop.Shared
 {
-    public class Rating
+    public class RatingDto
     {
         public string id { get; set; }
         public string username { get; set; }
@@ -13,7 +10,7 @@ namespace RookieShop.Backend.Models
         public string Productid { get; set; }
         public DateTime localDate { get; set; }
 
-        //public virtual Product Product { get; set; }
+        //public virtual ProductDto Product { get; set; }
 
     }
 }

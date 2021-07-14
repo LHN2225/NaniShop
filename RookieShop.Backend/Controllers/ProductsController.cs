@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RookieShop.Backend.Data;
 using RookieShop.Backend.Models;
+using RookieShop.Shared;
 
 namespace RookieShop.Backend.Controllers
 {
@@ -53,8 +54,19 @@ namespace RookieShop.Backend.Controllers
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(string id, Product product)
+        public async Task<IActionResult> PutProduct(string id, ProductDto productDto)
         {
+            Product product = new Product()
+            {
+                id = productDto.id,
+                imageUri = productDto.imageUri,
+                name = productDto.name,
+                description = productDto.description,
+                amount = productDto.amount,
+                price = productDto.price,
+                categoryid = productDto.categoryid
+            };
+
             if (id != product.id)
             {
                 return BadRequest();
@@ -84,8 +96,19 @@ namespace RookieShop.Backend.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Product>> PostProduct(ProductDto productDto)
         {
+            Product product = new Product()
+            {
+                id = productDto.id,
+                imageUri = productDto.imageUri,
+                name = productDto.name,
+                description = productDto.description,
+                amount = productDto.amount,
+                price = productDto.price,
+                categoryid = productDto.categoryid
+            };
+
             _context.Products.Add(product);
             try
             {

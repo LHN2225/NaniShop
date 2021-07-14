@@ -2,12 +2,12 @@
 
 namespace RookieShop.Shared
 {
-    public class Category
+    public class CategoryDto
     {
         public string id { get; set; }
         public string name { get; set; }
 
-        public List<Product> products { get; set; } = new List<Product>();
+        public List<ProductDto> products { get; set; } = new List<ProductDto>();
 
     }
 }
