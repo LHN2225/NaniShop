@@ -30,21 +30,23 @@ namespace RookieShop.Backend.Controllers
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public Category GetCategory(string id)
+        public ActionResult<Category> GetCategory(string id)
         {
             var category = _context.Categories.Single(c => c.id == id);
 
-			/*if (category == null)
+            /*if (category == null)
 			{
 				return NotFound();
 			}*/
+
+            //var check = category.products;
 
 			return category;
         }
 
         // GET: api/Categories/Details/5
         [HttpGet("Details/{id}")]
-        public List<Product> GetProductByCategoryId(string id)
+        public ActionResult<List<Product>> GetProductByCategoryId(string id)
 		{
             var productList = _context.Products.Where(p => p.categoryid == id).ToList();
             return productList;

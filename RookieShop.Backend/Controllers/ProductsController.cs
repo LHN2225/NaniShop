@@ -43,11 +43,11 @@ namespace RookieShop.Backend.Controllers
         }
 
         [HttpGet("Details/{id}")]
-        public Product GetProductWithRating(string id)
+        public ActionResult<Product> GetProductWithRating(string id)
         {
             var product = _context.Products.Single(p => p.id == id);
 
-            return (Product)product;
+            return product;
         }
 
         // PUT: api/Products/5

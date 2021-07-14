@@ -32,7 +32,7 @@
 				<div class="row">
 					@if (Model != null)
 					{
-						@foreach (var item in Model.productList)
+						@foreach (var item in Model.category.products)
 						{
 							<div id="product_card" class="card col-md-4 col-sm-6 col-xs-12 p-0" @*style="width: 20rem;"*@>
 								<a id="product_card_image_btn" class="btn btn-outline-light p-0" asp-controller="Product" asp-action="@item.id">

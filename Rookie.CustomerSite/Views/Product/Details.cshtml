@@ -11,7 +11,7 @@
 
 <div class="container">
 	<div class="row">
-		<ul>
+		<div style="display: inline-block">
 			<a id="order_path_home" asp-controller="Home" asp-action="Index">
 				Home
 			</a>
@@ -20,7 +20,7 @@
 				@Model.category.name
 			</a>
 			> @Model.product.name
-		</ul>
+		</div>
 		<hr />
 	</div>
 	<div class="row">
@@ -39,30 +39,31 @@
 				@if (Model.product.amount > 0)
 				{
 					<h6 style="color: green">In stock: @Model.product.amount</h6>
+					<div>
+						<select class="form-control mt-4 mb-2 w-auto" id="quantity_purchase">
+							@if (Model.product.amount < 10)
+							{
+								@for (int i = 1; i <= Model.product.amount; ++i)
+								{
+									<option>@i</option>
+								}
+							}
+							else
+							{
+								@for (int i = 1; i <= 10; ++i)
+								{
+									<option>@i</option>
+								}
+							}
+						</select>
+					</div>
 				}
 				else
 				{
 					<h6 style="color: tomato">Out of stock</h6>
 				}
 				@*<label for="quantity_purchase">Quantity you would like to purchase:</label>*@
-				<div>
-					<select class="form-control mt-4 mb-2 w-auto" id="quantity_purchase">
-						@if (Model.product.amount < 10)
-						{
-							@for (int i = 1; i <= Model.product.amount; ++i)
-							{
-								<option>@i</option>
-							}
-						}
-						else
-						{
-							@for (int i = 1; i <= 10; ++i)
-							{
-								<option>@i</option>
-							}
-						}
-					</select>
-				</div>
+
 
 				<p>*Note: We restrict the purchase limit available to a single household to ensure fairness for all of our fans.</p>
 			</div>
@@ -80,5 +81,16 @@
 	<div class="row">
 		<h3>Rating</h3>
 		<hr />
+	</div>
+	<div class="row">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Card title</h5>
+				@*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
+				<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				@*<a href="#" class="card-link">Card link</a>
+				<a href="#" class="card-link">Another link</a>*@
+			</div>
+		</div>
 	</div>
 </div>
