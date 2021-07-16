@@ -10,5 +10,7 @@ namespace Rookie.CustomerSite.ViewModels
 	{
 		public CategoryDto category { get; set; }
 		public ProductDto product { get; set; }
+
+		public RatingDto rating { get; set; }
 	}
 }

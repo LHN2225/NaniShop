@@ -58,12 +58,18 @@ namespace Rookie.CustomerSite.Controllers
 		}*/
 
 		[HttpPost("addRating")]
-		public ActionResult Details([FromForm] string ratingName, [FromForm] string ratingMessage)
+		public async Task<ActionResult> DetailsAsync([FromForm] RatingDto ratingDto)
 		{
 			/*var name = Request.Form["ratingName"];
 			var mess = Request.Form["ratingMessage"];*/
-			var name = ratingName;
-			var mess = ratingMessage;
+
+			if (ModelState.IsValid)
+			{
+				var name = ratingDto.username;
+				int x = ratingDto.ratingPoint;
+			}
+			
+			await Task.Delay(5000);
 			return Redirect($"{viewProductDetail.product.id}");
 			// do something with emailAddress
 		}
