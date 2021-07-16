@@ -29,7 +29,7 @@ namespace Rookie.CustomerSite.Controllers
 
         public IActionResult PrivacyAsync()
         {
-            List<ProductDto> productList = GetAllProductAsync("api/Products").GetAwaiter().GetResult();
+            //List<ProductDto> productList = GetAllProductAsync("api/Products").GetAwaiter().GetResult();
 			//MyCallingAPI<Product> myCallingAPI = new MyCallingAPI<Product>();
 			//Product product = myCallingAPI.GetResFrom("api/Products/RSCAPWM0002");
 
@@ -47,7 +47,7 @@ namespace Rookie.CustomerSite.Controllers
                 product.name = "I am a dummy product name";
 			}*/
 
-			foreach (var item in productList)
+			/*foreach (var item in productList)
 			{
 				if (item.id.Contains("RSCAPM")) item.amount = 50;
 
@@ -55,8 +55,8 @@ namespace Rookie.CustomerSite.Controllers
 
 			foreach (var item in productList)
 			{
-				UpdateProductAsync(item).GetAwaiter().GetResult(); ;
-			}
+				UpdateProductAsync(item).GetAwaiter().GetResult();
+			}*/
 
 			//var statusCode = DeleteProductAsync(product.id).GetAwaiter().GetResult();
 

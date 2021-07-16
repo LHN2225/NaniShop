@@ -51,6 +51,29 @@ namespace Rookie.CustomerSite.Controllers
 			return View(viewProductDetail);
 		}
 
+		/*[HttpPost("Details")]
+		public ActionResult Details([FromForm] string ratingName, [FromForm] string ratingMessage)
+		{
+			return View(viewProductDetail);
+		}*/
+
+		[HttpPost("addRating")]
+		public async Task<ActionResult> DetailsAsync([FromForm] RatingDto ratingDto)
+		{
+			/*var name = Request.Form["ratingName"];
+			var mess = Request.Form["ratingMessage"];*/
+
+			if (ModelState.IsValid)
+			{
+				var name = ratingDto.username;
+				int x = ratingDto.ratingPoint;
+			}
+			
+			await Task.Delay(5000);
+			return Redirect($"{viewProductDetail.product.id}");
+			// do something with emailAddress
+		}
+
 		// GET: ProductController/Create
 		public ActionResult Create()
 		{
