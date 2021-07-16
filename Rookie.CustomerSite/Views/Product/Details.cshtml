@@ -2,12 +2,20 @@
 @using Rookie.CustomerSite.ViewModels;
 @inject Microsoft.Extensions.Configuration.IConfiguration configuration;
 
+@model ViewProductDetail
 
 @{
 	ViewData["Title"] = "Product detail Page";
+
+	bool addRating([FromForm] string ratingName, [FromForm] string ratingMessage)
+	{
+		var name = ratingName;
+		var mess = ratingMessage;
+		return true;
+	}
 }
 
-@model ViewProductDetail
+
 
 <div class="container">
 	<div class="row">
@@ -78,19 +86,111 @@
 		<hr />
 		<p>@Model.product.description</p>
 	</div>
-	<div class="row">
-		<h3>Rating</h3>
+	<div class="row pb-3">
+		<h3>Customer Reviews</h3>
 		<hr />
+		<div class="row">
+			<div class="col-8">
+				<h6>Overall Rating</h6>
+
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star"></span>
+
+			</div>
+			<div class="col">
+				<button id="writeareview_btn" type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Write a review</button>
+
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<form asp-controller="Product" asp-action="addRating" method="post">
+
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">New Rating</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="mb-3">
+										<label for="customer-name" class="col-form-label">Your name:</label>
+										<input type="text" class="form-control" id="customer-name" name="ratingName">
+									</div>
+
+									<div>
+										<div id="rating_card_frame" class="container p-0">
+											<div class="star-widget">
+												<input type="radio" name="rate" id="rate-5" />
+												<label for="rate-5" class="fa fa-star"></label>
+												<input type="radio" name="rate" id="rate-4" />
+												<label for="rate-4" class="fa fa-star"></label>
+												<input type="radio" name="rate" id="rate-3" />
+												<label for="rate-3" class="fa fa-star"></label>
+												<input type="radio" name="rate" id="rate-2" />
+												<label for="rate-2" class="fa fa-star"></label>
+												<input type="radio" name="rate" id="rate-1" />
+												<label for="rate-1" class="fa fa-star"></label>
+											</div>
+										</div>
+									</div>
+
+									<div class="mb-3">
+										<label for="message-text" class="col-form-label">Your review:</label>
+										<textarea class="form-control" id="message-text" name="ratingMessage"></textarea>
+									</div>
+
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									<button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Send</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalToggleLabel2">New rating</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body text-center">
+								<h3>Your review is recorded!</h3>
+								<h4>Thanks for your rating :")</h4>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
 	</div>
-	<div class="row">
+	<div class="row pb-1">
+		<h3>Reviews</h3>
+		<hr />
+
 		<div class="card">
 			<div class="card-body">
-				<h5 class="card-title">Card title</h5>
-				@*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
-				<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				@*<a href="#" class="card-link">Card link</a>
-				<a href="#" class="card-link">Another link</a>*@
+				<h5 class="card-title">Customer name</h5>
+				<h6 class="card-subtitle mb-2 text-muted">Date</h6>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+
+				<p>Comment</p>
 			</div>
 		</div>
+
+	</div>
+	<div class="row">
+		<button href="#" type="button" class="btn btn-secondary">View all reviews</button>
 	</div>
 </div>

@@ -51,6 +51,23 @@ namespace Rookie.CustomerSite.Controllers
 			return View(viewProductDetail);
 		}
 
+		/*[HttpPost("Details")]
+		public ActionResult Details([FromForm] string ratingName, [FromForm] string ratingMessage)
+		{
+			return View(viewProductDetail);
+		}*/
+
+		[HttpPost("addRating")]
+		public ActionResult Details([FromForm] string ratingName, [FromForm] string ratingMessage)
+		{
+			/*var name = Request.Form["ratingName"];
+			var mess = Request.Form["ratingMessage"];*/
+			var name = ratingName;
+			var mess = ratingMessage;
+			return Redirect($"{viewProductDetail.product.id}");
+			// do something with emailAddress
+		}
+
 		// GET: ProductController/Create
 		public ActionResult Create()
 		{
