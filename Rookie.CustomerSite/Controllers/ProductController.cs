@@ -61,7 +61,7 @@ namespace Rookie.CustomerSite.Controllers
 		}
 
 		[HttpPost("addRating")]
-		public ActionResult Details([FromForm] RatingDto ratingDto)
+		public async Task<ActionResult> DetailsAsync([FromForm] RatingDto ratingDto)
 		{
 			/*var name = Request.Form["ratingName"];
 			var mess = Request.Form["ratingMessage"];*/
@@ -72,8 +72,8 @@ namespace Rookie.CustomerSite.Controllers
 				ratingDto.localDate = DateTime.Now;
 			}
 
-			//await Task.Delay(2000);
 			var uri = PostTarget<RatingDto>("api/Ratings", ratingDto).GetAwaiter().GetResult();
+			await Task.Delay(3000);
 			return Redirect($"{viewProductDetail.product.id}");
 			// do something with emailAddress
 		}
