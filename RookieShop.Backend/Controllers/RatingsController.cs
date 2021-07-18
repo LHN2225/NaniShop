@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RookieShop.Backend.Data;
 using RookieShop.Backend.Models;
+using RookieShop.Shared;
 
 namespace RookieShop.Backend.Controllers
 {
@@ -76,8 +77,26 @@ namespace RookieShop.Backend.Controllers
         // POST: api/Ratings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Rating>> PostRating(Rating rating)
+        public async Task<ActionResult<Rating>> PostRating(RatingDto ratingDto)
         {
+            Rating rating = new Rating()
+            {
+                username = ratingDto.username,
+                ratingPoint = ratingDto.ratingPoint,
+                Productid = ratingDto.Productid,
+                message = ratingDto.message,
+                localDate = ratingDto.localDate
+            };
+
+            string rateId = "R" + ratingDto.Productid;
+
+            int recordCount = _context.Ratings.Where(x => x.id.StartsWith(rateId)).Count();
+            
+            recordCount++;
+            rateId += recordCount.ToString();
+
+            rating.id = rateId;
+
             _context.Ratings.Add(rating);
             try
             {
