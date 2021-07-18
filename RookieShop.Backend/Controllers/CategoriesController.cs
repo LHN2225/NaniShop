@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RookieShop.Backend.Data;
 using RookieShop.Backend.Models;
 using RookieShop.Shared;
+using AutoMapper;
 
 namespace RookieShop.Backend.Controllers
 {
@@ -16,41 +17,44 @@ namespace RookieShop.Backend.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-
-        public CategoriesController(ApplicationDbContext context)
+        private readonly IMapper _mapper;
+        public CategoriesController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            var categoryList = await _context.Categories.ToListAsync();
+            return _mapper.Map<List<CategoryDto>>(categoryList);
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public ActionResult<Category> GetCategory(string id)
+        public ActionResult<CategoryDto> GetCategory(string id)
         {
             var category = _context.Categories.Single(c => c.id == id);
 
-            /*if (category == null)
+            if (category == null)
 			{
 				return NotFound();
-			}*/
+			}
 
-            //var check = category.products;
+            CategoryDto categoryDto = _mapper.Map<CategoryDto>(category);
 
-			return category;
+			return categoryDto;
         }
 
         // GET: api/Categories/Details/5
         [HttpGet("Details/{id}")]
-        public ActionResult<List<Product>> GetProductByCategoryId(string id)
+        public ActionResult<List<ProductDto>> GetProductByCategoryId(string id)
 		{
             var productList = _context.Products.Where(p => p.categoryid == id).ToList();
-            return productList;
+            List<ProductDto> productListDto = _mapper.Map<List<ProductDto>>(productList);
+            return productListDto;
 		}
 
         // PUT: api/Categories/5
@@ -58,11 +62,7 @@ namespace RookieShop.Backend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategory(string id, CategoryDto categoryDto)
         {
-            Category category = new Category()
-            {
-                id = categoryDto.id,
-                name = categoryDto.name
-            };
+            Category category = _mapper.Map<Category>(categoryDto);
 
             if (id != category.id)
             {
@@ -95,11 +95,7 @@ namespace RookieShop.Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> PostCategory(CategoryDto categoryDto)
         {
-            Category category = new Category()
-            {
-                id = categoryDto.id,
-                name = categoryDto.name
-            };
+            Category category = _mapper.Map<Category>(categoryDto);
 
             _context.Categories.Add(category);
             try

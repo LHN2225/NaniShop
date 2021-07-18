@@ -6,30 +6,8 @@
 
 @{
 	ViewData["Title"] = "Product detail Page";
-
-	int totalRatingDisplay = 6;
-	float ratingPoint = 0;
-	int overallPointDisplay = 0;
-
-	if (Model.product.ratings.Count > 0)
-	{
-		for (int i = 0; i < Model.product.ratings.Count; ++i)
-		{
-			ratingPoint += Model.product.ratings[i].ratingPoint;
-		}
-		ratingPoint /= Model.product.ratings.Count;
-
-		if (ratingPoint > 4.5) overallPointDisplay = 5;
-		else if (ratingPoint > 3.5) overallPointDisplay = 4;
-		else if (ratingPoint > 2.5) overallPointDisplay = 3;
-		else if (ratingPoint > 1.5) overallPointDisplay = 2;
-		else overallPointDisplay = 1;
-	}
-
-	if (Model.product.ratings.Count < totalRatingDisplay)
-	{
-		totalRatingDisplay = Model.product.ratings.Count;
-	}
+	Model.clear();
+	Model.init();
 }
 
 
@@ -65,19 +43,9 @@
 					<h6 style="color: green">In stock: @Model.product.amount</h6>
 					<div>
 						<select class="form-control mt-4 mb-2 w-auto" id="quantity_purchase">
-							@if (Model.product.amount < 10)
+							@for (int i = 1; i <= Model.limitAmount; ++i)
 							{
-								@for (int i = 1; i <= Model.product.amount; ++i)
-								{
-									<option>@i</option>
-								}
-							}
-							else
-							{
-								@for (int i = 1; i <= 10; ++i)
-								{
-									<option>@i</option>
-								}
+								<option>@i</option>
 							}
 						</select>
 					</div>
@@ -111,12 +79,12 @@
 				<h6>Overall Rating</h6>
 
 				<div style="display: inline">
-					@for (int star = 0; star < overallPointDisplay; ++star)
+					@for (int star = 0; star < Model.overallPointDisplay; ++star)
 					{
 						<span class="fa fa-star checked"></span>
 					}
 
-					@for (int star = overallPointDisplay; star < 5; ++star)
+					@for (int star = Model.overallPointDisplay; star < 5; ++star)
 					{
 						<span class="fa fa-star"></span>
 					}
@@ -229,7 +197,7 @@
 	<div class="row pb-1">
 		<h3>Reviews</h3>
 		<hr />
-		@for (int i = 0; i < totalRatingDisplay; ++i)
+		@for (int i = 0; i < Model.totalRatingDisplay; ++i)
 		{
 			<div class="card">
 				<div class="card-body">

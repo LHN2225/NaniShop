@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RookieShop.Backend.Data;
 using RookieShop.Backend.Models;
 using RookieShop.Shared;
+using AutoMapper;
 
 namespace RookieShop.Backend.Controllers
 {
@@ -16,22 +17,25 @@ namespace RookieShop.Backend.Controllers
     public class RatingsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public RatingsController(ApplicationDbContext context)
+        public RatingsController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Ratings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Rating>>> GetRatings()
+        public async Task<ActionResult<IEnumerable<RatingDto>>> GetRatings()
         {
-            return await _context.Ratings.ToListAsync();
+            var ratingList = await _context.Ratings.ToListAsync();
+            return _mapper.Map<List<RatingDto>>(ratingList);
         }
 
         // GET: api/Ratings/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Rating>> GetRating(string id)
+        public async Task<ActionResult<RatingDto>> GetRating(string id)
         {
             var rating = await _context.Ratings.FindAsync(id);
 
@@ -40,14 +44,16 @@ namespace RookieShop.Backend.Controllers
                 return NotFound();
             }
 
-            return rating;
+            return _mapper.Map<RatingDto>(rating);
         }
 
         // PUT: api/Ratings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRating(string id, Rating rating)
+        public async Task<IActionResult> PutRating(string id, RatingDto ratingDto)
         {
+            Rating rating = _mapper.Map<Rating>(ratingDto);
+
             if (id != rating.id)
             {
                 return BadRequest();
@@ -77,22 +83,17 @@ namespace RookieShop.Backend.Controllers
         // POST: api/Ratings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Rating>> PostRating(RatingDto ratingDto)
+        public async Task<ActionResult<RatingDto>> PostRating(RatingDto ratingDto)
         {
-            Rating rating = new Rating()
-            {
-                username = ratingDto.username,
-                ratingPoint = ratingDto.ratingPoint,
-                Productid = ratingDto.Productid,
-                message = ratingDto.message,
-                localDate = ratingDto.localDate
-            };
+            Rating rating = _mapper.Map<Rating>(ratingDto);
 
             string rateId = "R" + ratingDto.Productid;
 
             int recordCount = _context.Ratings.Where(x => x.id.StartsWith(rateId)).Count();
             
             recordCount++;
+            string tmp = rateId;
+            while (RatingExists(tmp + recordCount.ToString())) ++recordCount;
             rateId += recordCount.ToString();
 
             rating.id = rateId;

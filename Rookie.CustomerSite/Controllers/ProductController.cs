@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Rookie.CustomerSite.ViewModels;
 using RookieShop.Shared;
 using System;
@@ -15,13 +16,21 @@ namespace Rookie.CustomerSite.Controllers
 	public class ProductController : Controller
 	{
 		static HttpClient client = new HttpClient();
+		static bool isInit = false;
+
+		static IConfiguration Configuration;
 		static ViewProductDetail viewProductDetail = new ViewProductDetail();
-		static ProductController()
+		public ProductController(IConfiguration configuration)
 		{
-			client.BaseAddress = new Uri("https://localhost:44341/");
-			client.DefaultRequestHeaders.Accept.Clear();
-			client.DefaultRequestHeaders.Accept.Add(
-				new MediaTypeWithQualityHeaderValue("application/json"));
+			if (!isInit)
+			{
+				Configuration = configuration;
+				isInit = true;
+				client.BaseAddress = new Uri(Configuration["BackendBaseAddress"]);
+				client.DefaultRequestHeaders.Accept.Clear();
+				client.DefaultRequestHeaders.Accept.Add(
+					new MediaTypeWithQualityHeaderValue("application/json"));
+			}
 		}
 
 		static async Task<T> GetTarget<T>(string path) where T : class
@@ -72,7 +81,7 @@ namespace Rookie.CustomerSite.Controllers
 				ratingDto.localDate = DateTime.Now;
 			}
 
-			var uri = PostTarget<RatingDto>("api/Ratings", ratingDto).GetAwaiter().GetResult();
+			var uri = PostTarget("api/Ratings", ratingDto).GetAwaiter().GetResult();
 			await Task.Delay(3000);
 			return Redirect($"{viewProductDetail.product.id}");
 			// do something with emailAddress

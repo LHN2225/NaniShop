@@ -35,6 +35,10 @@ namespace RookieShop.Backend
                     Configuration.GetConnectionString("connection")).UseLazyLoadingProxies());
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            
+            services.AddAutoMapper(typeof(Startup));
+
+
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();

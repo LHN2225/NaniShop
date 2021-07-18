@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RookieShop.Backend.Data;
 using RookieShop.Backend.Models;
 using RookieShop.Shared;
+using AutoMapper;
 
 namespace RookieShop.Backend.Controllers
 {
@@ -16,22 +17,25 @@ namespace RookieShop.Backend.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            var productList = await _context.Products.ToListAsync();
+            return _mapper.Map<List<ProductDto>>(productList);
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(string id)
+        public async Task<ActionResult<ProductDto>> GetProduct(string id)
         {
             var product = await _context.Products.FindAsync(id);
 
@@ -40,15 +44,15 @@ namespace RookieShop.Backend.Controllers
                 return NotFound();
             }
 
-            return product;
+            return _mapper.Map<ProductDto>(product);
         }
 
         [HttpGet("Details/{id}")]
-        public ActionResult<Product> GetProductWithRating(string id)
+        public ActionResult<ProductDto> GetProductWithRating(string id)
         {
             var product = _context.Products.Single(p => p.id == id);
 
-            return product;
+            return _mapper.Map<ProductDto>(product);
         }
 
         // PUT: api/Products/5
@@ -56,16 +60,7 @@ namespace RookieShop.Backend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(string id, ProductDto productDto)
         {
-            Product product = new Product()
-            {
-                id = productDto.id,
-                imageUri = productDto.imageUri,
-                name = productDto.name,
-                description = productDto.description,
-                amount = productDto.amount,
-                price = productDto.price,
-                categoryid = productDto.categoryid
-            };
+            Product product = _mapper.Map<Product>(productDto);
 
             if (id != product.id)
             {
@@ -98,16 +93,7 @@ namespace RookieShop.Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(ProductDto productDto)
         {
-            Product product = new Product()
-            {
-                id = productDto.id,
-                imageUri = productDto.imageUri,
-                name = productDto.name,
-                description = productDto.description,
-                amount = productDto.amount,
-                price = productDto.price,
-                categoryid = productDto.categoryid
-            };
+            Product product = _mapper.Map<Product>(productDto);
 
             _context.Products.Add(product);
             try
