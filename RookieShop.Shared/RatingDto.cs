@@ -13,6 +13,7 @@ namespace RookieShop.Shared
         public int ratingPoint { get; set; }
         public string Productid { get; set; }
         public DateTime localDate { get; set; }
+        public string message { get; set; }
 
         //public virtual ProductDto Product { get; set; }
 

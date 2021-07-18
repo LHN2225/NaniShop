@@ -35,6 +35,15 @@ namespace Rookie.CustomerSite.Controllers
 			return target;
 		}
 
+		static async Task<Uri> PostTarget<T>(string path, T target) where T : class
+		{
+			HttpResponseMessage response = await client.PostAsJsonAsync(path, target);
+			response.EnsureSuccessStatusCode();
+
+			// return URI of the created resource.
+			return response.Headers.Location;
+		}
+
 
 		// GET: ProductController
 		public ActionResult Index()
@@ -51,25 +60,20 @@ namespace Rookie.CustomerSite.Controllers
 			return View(viewProductDetail);
 		}
 
-		/*[HttpPost("Details")]
-		public ActionResult Details([FromForm] string ratingName, [FromForm] string ratingMessage)
-		{
-			return View(viewProductDetail);
-		}*/
-
 		[HttpPost("addRating")]
-		public async Task<ActionResult> DetailsAsync([FromForm] RatingDto ratingDto)
+		public ActionResult Details([FromForm] RatingDto ratingDto)
 		{
 			/*var name = Request.Form["ratingName"];
 			var mess = Request.Form["ratingMessage"];*/
 
 			if (ModelState.IsValid)
 			{
-				var name = ratingDto.username;
-				int x = ratingDto.ratingPoint;
+				ratingDto.Productid = viewProductDetail.product.id;
+				ratingDto.localDate = DateTime.Now;
 			}
-			
-			await Task.Delay(5000);
+
+			//await Task.Delay(2000);
+			var uri = PostTarget<RatingDto>("api/Ratings", ratingDto).GetAwaiter().GetResult();
 			return Redirect($"{viewProductDetail.product.id}");
 			// do something with emailAddress
 		}

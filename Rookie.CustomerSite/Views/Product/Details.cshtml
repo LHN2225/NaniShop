@@ -7,6 +7,29 @@
 @{
 	ViewData["Title"] = "Product detail Page";
 
+	int totalRatingDisplay = 6;
+	float ratingPoint = 0;
+	int overallPointDisplay = 0;
+
+	if (Model.product.ratings.Count > 0)
+	{
+		for (int i = 0; i < Model.product.ratings.Count; ++i)
+		{
+			ratingPoint += Model.product.ratings[i].ratingPoint;
+		}
+		ratingPoint /= Model.product.ratings.Count;
+
+		if (ratingPoint > 4.5) overallPointDisplay = 5;
+		else if (ratingPoint > 3.5) overallPointDisplay = 4;
+		else if (ratingPoint > 2.5) overallPointDisplay = 3;
+		else if (ratingPoint > 1.5) overallPointDisplay = 2;
+		else overallPointDisplay = 1;
+	}
+
+	if (Model.product.ratings.Count < totalRatingDisplay)
+	{
+		totalRatingDisplay = Model.product.ratings.Count;
+	}
 }
 
 
@@ -84,14 +107,23 @@
 		<hr />
 		<div class="row">
 			<div class="col-8">
+				
 				<h6>Overall Rating</h6>
 
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star"></span>
+				<div style="display: inline">
+					@for (int star = 0; star < overallPointDisplay; ++star)
+					{
+						<span class="fa fa-star checked"></span>
+					}
 
+					@for (int star = overallPointDisplay; star < 5; ++star)
+					{
+						<span class="fa fa-star"></span>
+					}
+
+					<p>(@Model.product.ratings.Count Reviews)</p>
+				</div>
+								
 			</div>
 			<div class="col">
 				<button id="writeareview_btn" type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Write a review</button>
@@ -138,7 +170,7 @@
 
 									<div class="mb-3">
 										<label for="message-text" class="col-form-label">Your review:</label>
-										<textarea class="form-control" id="message-text" name="ratingMessage"></textarea>
+										<textarea class="form-control" id="message-text" name="message"></textarea>
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -197,21 +229,28 @@
 	<div class="row pb-1">
 		<h3>Reviews</h3>
 		<hr />
+		@for (int i = 0; i < totalRatingDisplay; ++i)
+		{
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">@Model.product.ratings[i].username</h5>
+					<h6 class="card-subtitle mb-2 text-muted">@Model.product.ratings[i].localDate</h6>
 
-		<div class="card">
-			<div class="card-body">
-				<h5 class="card-title">Customer name</h5>
-				<h6 class="card-subtitle mb-2 text-muted">Date</h6>
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star checked"></span>
+					@for (int star = 0; star < @Model.product.ratings[i].ratingPoint; ++star)
+					{
+						<span class="fa fa-star checked"></span>
+					}
 
-				<p>Comment</p>
+					@for (int star = @Model.product.ratings[i].ratingPoint; star < 5; ++star)
+					{
+						<span class="fa fa-star"></span>
+					}
+
+					<p>@Model.product.ratings[i].message</p>
+
+				</div>
 			</div>
-		</div>
-
+		}
 	</div>
 	<div class="row">
 		<button href="#" type="button" class="btn btn-secondary">View all reviews</button>
