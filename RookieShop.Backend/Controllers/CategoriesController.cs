@@ -127,7 +127,10 @@ namespace RookieShop.Backend.Controllers
                 return NotFound();
             }
 
-            _context.Categories.Remove(category);
+            category.isDeleted = true;
+            _context.Entry(category).State = EntityState.Modified;
+
+            //_context.Categories.Remove(category);
             await _context.SaveChangesAsync();
 
             return NoContent();

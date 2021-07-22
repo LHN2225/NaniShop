@@ -9,6 +9,8 @@ using RookieShop.Backend.Data;
 using RookieShop.Backend.Models;
 using RookieShop.Shared;
 using AutoMapper;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace RookieShop.Backend.Controllers
 {
@@ -18,11 +20,12 @@ namespace RookieShop.Backend.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-
-        public ProductsController(ApplicationDbContext context, IMapper mapper)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductsController(ApplicationDbContext context, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: api/Products
@@ -91,9 +94,13 @@ namespace RookieShop.Backend.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(ProductDto productDto)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<Product>> PostProduct([FromForm] ProductDto productDto)
         {
             Product product = _mapper.Map<Product>(productDto);
+
+            string uniqueFileName = UploadedFile(productDto);
+            product.imageUri = uniqueFileName;
 
             _context.Products.Add(product);
             try
@@ -115,6 +122,53 @@ namespace RookieShop.Backend.Controllers
             return CreatedAtAction("GetProduct", new { id = product.id }, product);
         }
 
+
+        private string UploadedImage(IFormFile image)
+        {
+            string uniqueFileName = null;
+
+            if (image != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "ProductImage");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+
+		private string UploadedFile(ProductDto model)
+		{
+			string uniqueFileName = null;
+
+			if (model.image != null)
+			{
+				string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "ProductImage");
+				uniqueFileName = Guid.NewGuid().ToString() + "_" + model.image.FileName;
+
+				string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					model.image.CopyTo(fileStream);
+				}
+			}
+			return uniqueFileName;
+		}
+
+        /*public async Task DeleteFileAsync(string fileName)
+        {
+            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "ProductImage");
+
+            var filePath = Path.Combine(uploadsFolder, fileName);
+            if (System.IO.File.Exists(filePath))
+            {
+                await Task.Run(() => System.IO.File.Delete(filePath));
+            }
+        }*/
+
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(string id)
@@ -125,7 +179,9 @@ namespace RookieShop.Backend.Controllers
                 return NotFound();
             }
 
-            _context.Products.Remove(product);
+            product.isDeleted = true;
+            //_context.Products.Remove(product);
+            _context.Entry(product).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();

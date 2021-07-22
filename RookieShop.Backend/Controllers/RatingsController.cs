@@ -128,7 +128,10 @@ namespace RookieShop.Backend.Controllers
                 return NotFound();
             }
 
-            _context.Ratings.Remove(rating);
+            rating.isDeleted = true;
+            _context.Entry(rating).State = EntityState.Modified;
+
+            //_context.Ratings.Remove(rating);
             await _context.SaveChangesAsync();
 
             return NoContent();

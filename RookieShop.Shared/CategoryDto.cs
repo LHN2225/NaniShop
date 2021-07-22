@@ -7,6 +7,8 @@ namespace RookieShop.Shared
         public string id { get; set; }
         public string name { get; set; }
 
+        public bool isDeleted { get; set; }
+
         public List<ProductDto> products { get; set; } = new List<ProductDto>();
 
     }

@@ -15,6 +15,7 @@ namespace RookieShop.Backend.Models
         public DateTime localDate { get; set; }
         public string message { get; set; }
 
+        public bool isDeleted { get; set; } = false;
         //public virtual Product Product { get; set; }
 
     }

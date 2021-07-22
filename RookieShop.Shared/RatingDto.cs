@@ -14,6 +14,8 @@ namespace RookieShop.Shared
         public string Productid { get; set; }
         public DateTime localDate { get; set; }
         public string message { get; set; }
+        public bool isDeleted { get; set; }
+
 
         //public virtual ProductDto Product { get; set; }
 
