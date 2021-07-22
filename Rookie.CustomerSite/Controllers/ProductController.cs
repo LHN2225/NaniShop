@@ -79,10 +79,10 @@ namespace Rookie.CustomerSite.Controllers
 			{
 				ratingDto.Productid = viewProductDetail.product.id;
 				ratingDto.localDate = DateTime.Now;
-			}
 
-			var uri = PostTarget("api/Ratings", ratingDto).GetAwaiter().GetResult();
-			await Task.Delay(3000);
+				var uri = PostTarget("api/Ratings", ratingDto).GetAwaiter().GetResult();
+				await Task.Delay(3000);
+			}
 			return Redirect($"{viewProductDetail.product.id}");
 			// do something with emailAddress
 		}

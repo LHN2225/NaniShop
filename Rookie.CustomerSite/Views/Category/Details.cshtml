@@ -34,9 +34,10 @@
 					{
 						@foreach (var item in Model.category.products)
 						{
+							if (item.isDeleted) continue;
 							<div id="product_card" class="card col-md-4 col-sm-6 col-xs-12 p-0" @*style="width: 20rem;"*@>
 								<a id="product_card_image_btn" class="btn btn-outline-light p-0" asp-controller="Product" asp-action="@item.id">
-									<img id="product_card_image" src="@Url.Content(configuration["BackendBaseAddress"] + @item.imageUri)" alt="@item.imageUri">
+									<img id="product_card_image" src="@Url.Content(configuration["BackendBaseAddress"] + configuration["ImageStorageAddress"]  + @item.imageUri)" alt="@item.imageUri">
 								</a>
 								<div class="card-body">
 									<a id="product_card_name_link" asp-controller="Product" asp-action="@item.id">

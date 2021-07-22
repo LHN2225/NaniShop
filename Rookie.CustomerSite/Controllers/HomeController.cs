@@ -10,13 +10,20 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RookieShop.Shared;
 using System.Net;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace Rookie.CustomerSite.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        static bool isUpload { get; set; } = false;
+        static public ProductDto productDto = new ProductDto();
 
+        [DataType(DataType.Upload)]
+        [FileExtensions(Extensions = "jpg")]
+        public IFormFile photo { get; set; }
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -27,27 +34,27 @@ namespace Rookie.CustomerSite.Controllers
             return View();
         }
 
-        public IActionResult PrivacyAsync()
+        public IActionResult Privacy()
         {
             //List<ProductDto> productList = GetAllProductAsync("api/Products").GetAwaiter().GetResult();
-			//MyCallingAPI<Product> myCallingAPI = new MyCallingAPI<Product>();
-			//Product product = myCallingAPI.GetResFrom("api/Products/RSCAPWM0002");
+            //MyCallingAPI<Product> myCallingAPI = new MyCallingAPI<Product>();
+            //Product product = myCallingAPI.GetResFrom("api/Products/RSCAPWM0002");
 
-			//if (product == null) return View(null);
-			//return View(product);
+            //if (product == null) return View(null);
+            //return View(product);
 
-			//Product product = new Product() { id = "1" };
+            //ProductDto product = new ProductDto() { id = "1" };
 
-			//var url = CreateProductAsync(product).GetAwaiter().GetResult();
+            //var url = CreateProductAsync(product).GetAwaiter().GetResult();
 
-			//Product product = GetProductAsync("api/Products/1").GetAwaiter().GetResult();
+            //Product product = GetProductAsync("api/Products/1").GetAwaiter().GetResult();
 
-			/*if (product != null)
+            /*if (product != null)
 			{
                 product.name = "I am a dummy product name";
 			}*/
 
-			/*foreach (var item in productList)
+            /*foreach (var item in productList)
 			{
 				if (item.id.Contains("RSCAPM")) item.amount = 50;
 
@@ -58,19 +65,26 @@ namespace Rookie.CustomerSite.Controllers
 				UpdateProductAsync(item).GetAwaiter().GetResult();
 			}*/
 
-			//var statusCode = DeleteProductAsync(product.id).GetAwaiter().GetResult();
+            //var statusCode = DeleteProductAsync(product.id).GetAwaiter().GetResult();
 
-			return View();
+            return View(productDto);
             //return View(product);
         }
 
+        public IActionResult SendImage([FromForm] ProductDto productDto)
+        {
+            var photo = productDto.image;
+            var url = CreateProductAsync(productDto).GetAwaiter().GetResult();
+            return Redirect("Index");
+        }   
 
-		/*static async Task RunAsync()
+
+        /*static async Task RunAsync()
 		{
 
 		}*/
 
-		static async Task<ProductDto> GetProductAsync(string path)
+        static async Task<ProductDto> GetProductAsync(string path)
 		{
 
 			HttpClient client = new HttpClient();
@@ -109,17 +123,24 @@ namespace Rookie.CustomerSite.Controllers
             }
             return product;
         }
-        static async Task<Uri> CreateProductAsync(ProductDto product)
+        static async Task<Uri> CreateProductAsync([FromForm] ProductDto product)
         {
             HttpClient client = new HttpClient();
 
             client.BaseAddress = new Uri("https://localhost:44341/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+                new MediaTypeWithQualityHeaderValue("multipart/form-data"));
 
-            HttpResponseMessage response = await client.PostAsJsonAsync(
-                "api/Products", product);
+            /* HttpResponseMessage response = await client.PostAsJsonAsync(
+                 "api/Products/testUploadObject", product);*/
+            /* HttpResponseMessage response = await client.PostAsync(
+                  "api/Products/testUploadObject", new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)product));
+             */
+            var content = new MultipartFormDataContent(product.ToString());
+                       
+            HttpResponseMessage response = await client.PostAsync(
+                 "api/Products/testUploadObject", content);
             response.EnsureSuccessStatusCode();
 
             // return URI of the created resource.

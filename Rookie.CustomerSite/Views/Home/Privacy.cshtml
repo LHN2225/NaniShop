@@ -1,19 +1,16 @@
 ﻿@using RookieShop.Shared
 
-@*@model List<Product>*@
-@*@model int*@
-@*@model Product*@
 @{
 	ViewData["Title"] = "Privacy Policy";
 }
 
-<h1>@ViewData["Title"]</h1>
-@*<h2>Object: @Model.id.ToString(), @Model.name.ToString()</h2>
-*@@*<h2>Status code: @Model</h2>*@
+@model ProductDto;
 
-@*@foreach (var item in Model)
-	{
-		<h2>Object: @item.id.ToString(), @item.name.ToString()</h2>
-	}*@
+<h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+<form asp-controller="Home" asp-action="SendImage" enctype="multipart/form-data">
+	<input type="file" name="image" class="custom-file-input" id="customFile">
+	<button type="submit" class="btn-primary">Submit</button>
+</form>
