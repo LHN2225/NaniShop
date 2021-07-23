@@ -75,7 +75,7 @@
 		<hr />
 		<div class="row">
 			<div class="col-8">
-				
+
 				<h6>Overall Rating</h6>
 
 				<div style="display: inline">
@@ -91,7 +91,7 @@
 
 					<p>(@Model.product.ratings.Count Reviews)</p>
 				</div>
-								
+
 			</div>
 			<div class="col">
 				<button id="writeareview_btn" type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Write a review</button>
@@ -197,7 +197,7 @@
 	<div class="row pb-1">
 		<h3>Reviews</h3>
 		<hr />
-		@for (int i = 0; i < Model.totalRatingDisplay; ++i)
+		@*@for (int i = 0; i < Model.totalRatingDisplay; ++i)
 		{
 			<div class="card">
 				<div class="card-body">
@@ -218,7 +218,9 @@
 
 				</div>
 			</div>
-		}
+		}*@
+
+		@await Component.InvokeAsync("RatingList", new { ratingList = Model.product.ratings, totalDisplay = Model.totalRatingDisplay })
 	</div>
 	<div class="row">
 		<button href="#" type="button" class="btn btn-secondary">View all reviews</button>
