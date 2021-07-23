@@ -1,0 +1,32 @@
+﻿@using RookieShop.Shared;
+
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model dynamic
+
+@for (int i = 0; i < Model.total; ++i)
+{
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title">@Model.ratinglist[i].username</h5>
+			<h6 class="card-subtitle mb-2 text-muted">@Model.ratinglist[i].localDate</h6>
+
+			@for (int star = 0; star < @Model.ratinglist[i].ratingPoint; ++star)
+			{
+				<span class="fa fa-star checked"></span>
+			}
+
+			@for (int star = @Model.ratinglist[i].ratingPoint; star < 5; ++star)
+			{
+				<span class="fa fa-star"></span>
+			}
+
+			<p>@Model.ratinglist[i].message</p>
+
+		</div>
+	</div>
+}
