@@ -61,14 +61,24 @@ namespace RookieShop.Backend.Controllers
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(string id, ProductDto productDto)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> PutProduct(string id, [FromForm] ProductDto productDto)
         {
-            Product product = _mapper.Map<Product>(productDto);
-
-            if (id != product.id)
+            if (id != productDto.id)
             {
                 return BadRequest();
             }
+
+            Product product = _context.Products.Single(p => p.id == id);
+            product = _mapper.Map<Product>(productDto);
+
+            if (productDto.image != null)
+			{
+                string uniqueFileName = UploadedFile(productDto);
+                product.imageUri = uniqueFileName;
+            }
+
+            product.modifyDate = DateTime.Now;
 
             _context.Entry(product).State = EntityState.Modified;
 
@@ -101,6 +111,9 @@ namespace RookieShop.Backend.Controllers
 
             string uniqueFileName = UploadedFile(productDto);
             product.imageUri = uniqueFileName;
+
+            product.createDate = DateTime.Now;
+            product.modifyDate = DateTime.Now;
 
             _context.Products.Add(product);
             try

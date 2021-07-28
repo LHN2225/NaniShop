@@ -97,6 +97,18 @@ namespace RookieShop.Backend.Controllers
         {
             Category category = _mapper.Map<Category>(categoryDto);
 
+            string newId = "RSCA000";
+
+            int recordCount = _context.Categories.Count();
+
+            recordCount++;
+            string tmp = newId;
+            while (CategoryExists(tmp + recordCount.ToString())) ++recordCount;
+            newId += recordCount.ToString();
+
+            category.id = newId;
+            category.isDeleted = false;
+
             _context.Categories.Add(category);
             try
             {
