@@ -35,7 +35,15 @@ namespace RookieShop.Backend
                     Configuration.GetConnectionString("connection")).UseLazyLoadingProxies());
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            
+             services.AddCors(options => options.AddPolicy("Cors",
+            builder =>
+            {
+                builder.
+                AllowAnyOrigin().
+                AllowAnyMethod().
+                AllowAnyHeader();
+            }));
+
             services.AddAutoMapper(typeof(Startup));
 
 
@@ -118,6 +126,9 @@ namespace RookieShop.Backend
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCors("Cors");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
