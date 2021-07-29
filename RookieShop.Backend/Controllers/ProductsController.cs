@@ -69,18 +69,24 @@ namespace RookieShop.Backend.Controllers
                 return BadRequest();
             }
 
-            Product product = _context.Products.Single(p => p.id == id);
-            product = _mapper.Map<Product>(productDto);
+            //Product product = _mapper.Map<Product>(productDto);
+            Product old = _context.Products.Single(p => p.id == id);
 
             if (productDto.image != null)
 			{
                 string uniqueFileName = UploadedFile(productDto);
-                product.imageUri = uniqueFileName;
+                old.imageUri = uniqueFileName;
             }
+            old.name = productDto.name ?? old.name;
+            old.description = productDto.description ?? old.description;
+            old.amount = productDto.amount;
+            old.price = productDto.price;
+            old.categoryid = productDto.categoryid ?? old.categoryid;
 
-            product.modifyDate = DateTime.Now;
+            old.modifyDate = DateTime.Now;
 
-            _context.Entry(product).State = EntityState.Modified;
+
+            _context.Entry(old).State = EntityState.Modified;
 
             try
             {
@@ -114,6 +120,8 @@ namespace RookieShop.Backend.Controllers
 
             product.createDate = DateTime.Now;
             product.modifyDate = DateTime.Now;
+
+            product.isDeleted = false;
 
             _context.Products.Add(product);
             try
